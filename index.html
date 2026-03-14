@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Coconut Simulator</title>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        font-family: Arial;
+        text-align: center;
+        background: url("./images/bg.png") center/cover no-repeat;
+        overflow: hidden;
+      }
+      .outer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        background: #000000af;
+      }
+      .inner {
+        border: 2px solid rgba(38, 38, 38, 0.37);
+        background: #23232346;
+        color: white;
+        padding: 40px 80px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        animation: fadein 1.5s ease;
+      }
+      .hidden {
+        display: none;
+      }
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid black;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: auto;
+      }
+      .button {
+        margin-top: 20px;
+        background: #ffa12b;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 35px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 8px 0 #915100;
+        transition:
+          transform 0.1s,
+          box-shadow 0.1s;
+      }
+      .button:active {
+        transform: translateY(8px);
+        box-shadow: 0 0 0 #915100;
+      }
+      .fade {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s ease forwards;
+      }
+
+      .delay1 {
+        animation-delay: 0.5s;
+      }
+      .delay2 {
+        animation-delay: 1s;
+      }
+      .delay3 {
+        animation-delay: 1.5s;
+      }
+      .delay4 {
+        animation-delay: 2s;
+      }
+      .delay5 {
+        animation-delay: 2.5s;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+      <source src="./sound/bgm.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="outer">
+      <div class="inner">
+        <!-- Page 1 -->
+        <div id="welcome">
+          <h1>Welcome to Coconut Experiece</h1>
+          <button class="button" onclick="start()">Start</button>
+        </div>
+
+        <!-- Page 2 -->
+        <div id="loading" class="hidden">
+          <div class="loader"></div>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Page 3 -->
+        <div id="choice" class="hidden">
+          <h2 class="fade">Welcome to the Coconut Experience</h2>
+
+          <p class="fade delay1">
+            This interactive game is inspired by real-life observations and
+            documentary storytelling. It explores the world from an unusual
+            perspective the life of a coconut.
+          </p>
+
+          <p class="fade delay2">
+            From growing on a tree, falling to the ground, drifting in water,
+            and eventually becoming part of human life every stage represents
+            part of its journey.
+          </p>
+
+          <p class="fade delay3">
+            Throughout the experience you will observe how a coconut moves and
+            exists within its environment.
+          </p>
+
+          <p class="fade delay4">
+            Click the button below to continue the journey.
+          </p>
+          <input class="fade delay5" type="checkbox" />
+          <label class="fade delay5" for="checkbox"
+            >Yes! I want to experience how a coconut feels.</label
+          >
+          <br />
+          <button class="button fade delay5" onclick="goPage()">
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function start() {
+        const music = document.getElementById("bgMusic");
+
+        music.volume = 0;
+        music.play().catch((e) => console.log("Audio blocked:", e));
+
+        /* smooth audio fade in */
+        let vol = 0;
+        const fade = setInterval(() => {
+          if (vol < 0.4) {
+            vol += 0.02;
+            music.volume = vol;
+          } else {
+            clearInterval(fade);
+          }
+        }, 100);
+
+        document.getElementById("welcome").classList.add("hidden");
+        document.getElementById("loading").classList.remove("hidden");
+
+        setTimeout(() => {
+          document.getElementById("loading").classList.add("hidden");
+          document.getElementById("choice").classList.remove("hidden");
+        }, 2000);
+      }
+
+      function goPage() {
+        window.location.href = "page2.html";
+      }
+    </script>
+  </body>
+</html>

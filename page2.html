@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Coconut Experience</title>
+
+    <style>
+      body {
+        background: #000;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+      }
+
+      /* popup */
+
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 420px;
+        max-width: 90%;
+        background: #111;
+        border: 1px solid #333;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        text-align: center;
+        animation: popupFade 0.6s ease forwards;
+      }
+
+      .popup p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #d0d0d0;
+        margin-bottom: 25px;
+      }
+
+      /* button */
+
+      .popup button {
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* disabled state */
+
+      .popup button:disabled {
+        background: #555;
+        color: #bbb;
+        cursor: not-allowed;
+      }
+
+      /* enabled state */
+
+      .popup button.enabled {
+        background: #c7c697;
+        color: #252525;
+      }
+
+      .popup button.enabled:hover {
+        background: #e06800;
+        transform: scale(1.05);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .hideCursor {
+        cursor: none;
+      }
+
+      span {
+        border: 1px solid gray;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+
+      @keyframes popupFade {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -60%);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="popup" class="popup">
+      <p>
+        You are now a <span>Coconut</span>. Coconuts do not have
+        <span>eyes</span>, <span>ears</span>, or <span>limbs</span>. You cannot
+        <span>see</span>, <span>hear</span>, or <span>move</span> by choice.
+      </p>
+
+      <button id="startBtn" disabled>Starting in 5</button>
+    </div>
+
+    <script>
+      let count = 10;
+      const btn = document.getElementById("startBtn");
+
+      /* countdown */
+
+      const timer = setInterval(() => {
+        count--;
+
+        if (count > 0) {
+          btn.innerText = "Starting in " + count;
+        } else {
+          clearInterval(timer);
+
+          btn.innerText = "Enjoy the Game";
+          btn.disabled = false;
+          btn.classList.add("enabled");
+        }
+      }, 1000);
+
+      /* click action */
+
+      btn.onclick = function () {
+        document.getElementById("popup").classList.add("hidden");
+        document.body.classList.add("hideCursor");
+      };
+    </script>
+  </body>
+</html>
